@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Perfil de Saúde</title>
+    <link rel="stylesheet" href="../css/stylesCadastro.css">
+
+</head>
+<body>
+    <div class="container">
+        <h1>Cadastro de Perfil de Saúde</h1>
+        <form id="health-profile-form">
+            <div class="form-group">
+                <label for="name">Nome:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="birthdate">Data de Nascimento:</label>
+                <input type="date" id="birthdate" name="birthdate" required>
+            </div>
+            <div class="form-group">
+                <label for="gender">Gênero:</label>
+                <select id="gender" name="gender" required>
+                    <option value="male">Masculino</option>
+                    <option value="female">Feminino</option>
+                    <option value="other">Outro</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="conditions">Condições de Saúde:</label>
+                <textarea id="conditions" name="conditions" rows="4" required></textarea>
+            </div>
+            <button type="submit">Enviar</button>
+        </form>
+        <div class="success-message" id="success-message">Formulário enviado com sucesso!</div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('health-profile-form');
+        const successMessage = document.getElementById('success-message');
+        
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); 
+
+            const formData = new FormData(form);
+            const data = {};
+            for (const [key, value] of formData.entries()) {
+                data[key] = value;
+            }
+            
+            const birthdate = new Date(data['birthdate']);
+            const today = new Date();
+            let age = today.getFullYear() - birthdate.getFullYear();
+            const monthDiff = today.getMonth() - birthdate.getMonth();
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthdate.getDate())) {
+                age--;
+            }
+            data['age'] = age;
+
+            localStorage.setItem('healthProfile', JSON.stringify(data));
+            
+            console.log('Collected data:', data);
+            
+            successMessage.style.display = 'block';
+            
+            form.reset();
+        });
+    });
+    </script>
+</body>
+</html>

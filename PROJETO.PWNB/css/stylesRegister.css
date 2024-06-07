@@ -1,0 +1,64 @@
+/* O CSS permanece praticamente o mesmo, apenas ajustei para incluir os novos campos */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+}
+
+.register-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 400px; /* ajustado para alinhar com o container de saúde */
+}
+
+.register-container h2 {
+    margin-bottom: 20px;
+}
+
+.register-container input[type="text"],
+.register-container input[type="password"],
+.register-container input[type="date"],
+.register-container select,
+.register-container input[type="number"],
+.register-container textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.register-container input[type="submit"] {
+    background-color: #457b9d;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.register-container input[type="submit"]:hover {
+    background-color: #315b7c; /* ajustado para um tom mais escuro no hover */
+}
+
+.register-container p {
+    margin-top: 15px;
+}
+
+.register-container p a {
+    color: #457b9d;
+    text-decoration: none;
+}
+
+.register-container p a:hover {
+    text-decoration: underline;
+}

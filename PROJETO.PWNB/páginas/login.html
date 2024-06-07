@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="../css/stylesLogin.css">
+</head>
+<body>
+
+<div class="login-container">
+    <h2>Login</h2>
+    <form id="login-form">
+        <input type="text" id="username" name="username" placeholder="Usuário" required>
+        <input type="password" id="password" name="password" placeholder="Senha" required>
+        <input type="submit" value="Entrar">
+    </form>
+    <p>Não tem uma conta? <a href="register.html">Cadastre-se</a></p>
+</div>
+
+<script>
+    document.getElementById("login-form").addEventListener("submit", function(event) {
+        event.preventDefault(); 
+        
+        var username = document.getElementById("username").value;
+        var password = document.getElementById("password").value;
+
+        if (username.trim() === "" || password.trim() === "") {
+            alert("Por favor, preencha todos os campos.");
+            return;
+        }
+
+        var userDataString = localStorage.getItem(username);
+        
+        if (userDataString) {
+            var userData = JSON.parse(userDataString);
+            if (userData.password === password) {
+                alert("Login realizado com sucesso!");
+                localStorage.setItem("loggedInUser", username);  // Salva o nome do usuário
+                window.location.href = "../páginas/monitoramento.html";
+                return;
+            }
+        }
+        
+        alert("Usuário ou senha incorretos.");
+    });
+</script>
+
+</body>
+</html>

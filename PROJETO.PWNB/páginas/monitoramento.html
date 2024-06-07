@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitoramento</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        .success-message {
+            display: none;
+            margin-top: 20px;
+            color: green;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+        }
+        .subpagina {
+            display: none;
+        }
+        .subpagina.active {
+            display: block;
+        }
+        .data-display {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f4f8;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .data-display h2 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        .data-display p {
+            font-size: 1.5rem;
+            margin: 5px 0;
+        }
+        .data-display span {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="grid">
+        <div class="grid-header">
+            <div class="header_logo">
+                <img src="../icones/icone_logo.svg" alt="logo" class="logo-icon">
+                <h2 class="header_title-h2">Equilíbrio <br> Vital</h2>
+            </div>  
+            <div class="header_navSuperior">
+                <a href="../páginas/homeComLogin.html">Home</a>
+                <a href="../páginas/homeComLogin.html#sobre-nos">Sobre nós</a>
+                <a href="../páginas/contatos.html">Fale conosco</a>
+            </div>
+            <div class="header_acesso-cliente">
+                <div class="header_acesso-imagem">
+                    <img src="../icones/icone_user.svg" alt="Ícone do usuário" class="user-icon">
+                </div>
+                <div class="header_acesso-info">
+                    <p class="header_acesso-nome" id="user-name-display">login</p>
+                </div>
+            </div>
+        </div>
+        <div class="grid-aside">
+            <nav class="nav__lateral">
+                <ul class="nav__lateral-list">
+                    <li class="nav__lateral-item">
+                        <a href="../páginas/monitoramento.html" class="nav__lateral-link active">
+                            <img class="nav__lateral-icone" src="../icones/icone__monitoramento.svg" alt="icone para a página">
+                            <p class="nav__lateral-p-header">Monitoramento</p>
+                        </a>
+                    </li>
+                    <li class="nav__lateral-item">
+                        <a href="../páginas/resultados.html" class="nav__lateral-link">
+                            <img class="nav__lateral-icone" src="../icones/icone__resultados.svg" alt="icone para a página de Resultados">
+                            <p class="nav__lateral-p-header">Resultados</p>
+                        </a>
+                    </li>
+                    <li class="nav__lateral-item">
+                        <a href="../páginas/motivacao.html" class="nav__lateral-link">
+                            <img class="nav__lateral-icone" src="../icones/icone__motivacao.svg" alt="icone para a página Motivação">
+                            <p class="nav__lateral-p-header">Motivação</p>
+                        </a>
+                    </li>
+                    <li class="nav__lateral-item">
+                        <a href="../páginas/dicas.html" class="nav__lateral-link">
+                            <img class="nav__lateral-icone" src="../icones/icone__dicas.svg" alt="icone para a página de Dicas">
+                            <p class="nav__lateral-p-header">Dicas</p>
+                        </a>
+                    </li>
+                </ul>
+            </nav> 
+        </div>
+        <div class="grid-main">
+            <header>
+                <h1 class="navigation__title">Monitoramento</h1>
+            </header>
+            <nav class="navigation">
+                <ul class="list">
+                    <li class="list__item active" data-target="1"><a href="#">Meus dados</a></li>
+                    <li class="list__item" data-target="2"><a href="#">Alterar dados</a></li>
+                </ul>
+            </nav>
+            <div class="subpagina active" id="subpagina1">
+                <div class="data-display">
+                    <h2>Meus dados</h2>
+                    <p>Nome: <span id="nome"></span></p>
+                    <p>Peso: <span id="peso"></span> kg</p>
+                    <p>Altura: <span id="altura"></span> m</p>
+                    <p>IMC: <span id="imc"></span></p>
+                    <p>Condições de saúde: <span id="condicoes"></span></p>
+                </div>
+            </div>   
+            <div class="subpagina" id="subpagina2">
+                <div class="container">
+                    <h2>Alterar Perfil de Saúde</h2>
+                    <form id="health-profile-form">
+                        <div class="form-group">
+                            <label for="weight">Peso (kg):</label>
+                            <input type="number" id="weight" name="weight" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="height">Altura (cm):</label>
+                            <input type="number" id="height" name="height" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="conditions">Condições de Saúde:</label>
+                            <textarea id="conditions" name="conditions" rows="4" required></textarea>
+                        </div>
+                        <button type="submit">Enviar</button>
+                    </form>
+                    <div class="success-message" id="success-message">Formulário enviado com sucesso!</div>
+                </div>
+            </div>
+        </div>
+        <div class="grid-footer">
+            <p>
+                <span class="footer_termos">
+                    <a href="#">Política de Privacidade</a> 
+                    <a href="#">Termos e Condições</a><br>
+                </span>
+                <span class="footer_copy"> &copy; 2024 Todos os direitos reservados.</span>
+            </p>
+        </div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                var loggedInUser = localStorage.getItem("loggedInUser");
+
+                if (loggedInUser) {
+                    var userDataString = localStorage.getItem(loggedInUser);
+                    if (userDataString) {
+                        var userData = JSON.parse(userDataString);
+                        document.getElementById("nome").textContent = userData.healthProfile.name;
+                        document.getElementById("peso").textContent = userData.healthProfile.weight;
+                        document.getElementById("altura").textContent = userData.healthProfile.height / 100;
+
+                        var peso = parseFloat(userData.healthProfile.weight);
+                        var altura = parseFloat(userData.healthProfile.height) / 100;
+                        var imc = peso / (altura * altura);
+                        document.getElementById("imc").textContent = imc.toFixed(2);
+
+                        document.getElementById("condicoes").textContent = userData.healthProfile.conditions;
+                    }
+                }
+
+                document.getElementById("health-profile-form").addEventListener("submit", function(event) {
+                    event.preventDefault();
+
+                    var weight = parseFloat(document.getElementById("weight").value);
+                    var height = parseFloat(document.getElementById("height").value);
+                    var conditions = document.getElementById("conditions").value;
+
+                    if (weight <= 0 || height <= 0 || isNaN(weight) || isNaN(height)) {
+                        alert("Por favor, insira valores positivos válidos para peso e altura.");
+                        return;
+                    }
+
+                    if (loggedInUser) {
+                        var userDataString = localStorage.getItem(loggedInUser);
+                        if (userDataString) {
+                            var userData = JSON.parse(userDataString);
+
+                            var oldWeight = parseFloat(userData.healthProfile.weight);
+                            var weightChange = weight - oldWeight;
+                            var message = "";
+
+                            if (weightChange > 0) {
+                                message = "Poxa, seu peso aumentou " + weightChange.toFixed(2) + " KG.";
+                            } else if (weightChange < 0) {
+                                message = "Uhuuu! Meus parabéns! Você perdeu " + (-weightChange).toFixed(2) + " KG.";
+                            }
+
+                            localStorage.setItem("weightChangeMessage", message);
+
+                            userData.healthProfile.weight = weight;
+                            userData.healthProfile.height = height;
+                            userData.healthProfile.conditions = conditions;
+                            localStorage.setItem(loggedInUser, JSON.stringify(userData));
+
+                            document.getElementById("success-message").style.display = "block";
+                            setTimeout(function() {
+                                document.getElementById("success-message").style.display = "none";
+                            }, 2000);
+
+                            document.getElementById("peso").textContent = weight;
+                            document.getElementById("altura").textContent = height / 100;
+                            var imc = weight / ((height / 100) * (height / 100));
+                            document.getElementById("imc").textContent = imc.toFixed(2);
+                        }
+                    }
+                });
+
+                const items = document.querySelectorAll('.list .list__item');
+                const subpaginas = document.querySelectorAll('.subpagina');
+
+                items.forEach(function(item) {
+                    item.addEventListener('click', function(e) {
+                        e.preventDefault();
+
+                        const targetId = item.getAttribute('data-target');
+                        const targetSubpagina = document.getElementById('subpagina' + targetId);
+
+                        items.forEach(i => i.classList.remove('active'));
+                        subpaginas.forEach(sp => sp.classList.remove('active'));
+
+                        item.classList.add('active');
+                        targetSubpagina.classList.add('active');
+                    });
+                });
+            });
+            document.addEventListener("DOMContentLoaded", function() {
+                    
+                    var loggedInUser = localStorage.getItem("loggedInUser");
+                    
+                    if (loggedInUser) {
+                        document.getElementById("user-name-display").textContent = loggedInUser;
+                    }
+            });
+        </script>
+    </div>
+</body>
+</html>
+    

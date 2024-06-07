@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro</title>
+    <link rel="stylesheet" href="../css/stylesRegister.css">
+    <style>
+        .success-message {
+            display: none;
+            margin-top: 20px;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+
+<div class="register-container">
+    <h2>Cadastro</h2>
+    <form id="register-form">
+        <input type="text" id="new-username" name="username" placeholder="Usuário" required>
+        <input type="password" id="new-password" name="password" placeholder="Senha" required>
+        <div id="health-profile">
+            <input type="text" id="name" name="name" placeholder="Nome" required>
+            <input type="date" id="birthdate" name="birthdate" placeholder="Data de Nascimento" required>
+            <select id="gender" name="gender" required>
+                <option value="male">Masculino</option>
+                <option value="female">Feminino</option>
+                <option value="other">Outro</option>
+            </select>
+            <input type="number" id="weight" name="weight" placeholder="Peso (kg)" required>
+            <input type="number" id="height" name="height" placeholder="Altura (cm)" required>
+            <textarea id="conditions" name="conditions" placeholder="Condições de Saúde" rows="4" required></textarea>
+            <input type="number" id="exercise-days" name="exercise-days" placeholder="Atividade Física por Semana" required>
+            <input type="number" id="meals" name="meals" placeholder="Quatidade de refeições por dia" required>
+            <input type="number" id="sleep-hours" name="sleep-hours" placeholder="Horas de Sono por Noite" required>
+        </div>
+        <input type="submit" value="Cadastrar">
+        <!-- Mensagem de sucesso -->
+        <p class="success-message" id="success-message">Cadastro realizado com sucesso!</p>
+    </form>
+    <p>Já tem uma conta? <a href="login.html">Faça login</a></p>
+</div>
+
+<script>
+    document.getElementById("register-form").addEventListener("submit", function(event) {
+        event.preventDefault(); // Previne o envio do formulário
+        
+        var username = document.getElementById("new-username").value;
+        var password = document.getElementById("new-password").value;
+        var name = document.getElementById("name").value;
+        var birthdate = document.getElementById("birthdate").value;
+        var gender = document.getElementById("gender").value;
+        var weight = document.getElementById("weight").value;
+        var height = document.getElementById("height").value;
+        var conditions = document.getElementById("conditions").value;
+        var exerciseDays = document.getElementById("exercise-days").value;
+        var meals = document.getElementById("meals").value;
+        var sleepHours = document.getElementById("sleep-hours").value;
+
+        // Verifica se os campos estão preenchidos
+        if (username.trim() === "" || password.trim() === "" || name.trim() === "" || birthdate.trim() === "" || gender.trim() === "" || weight.trim() === "" || height.trim() === "" || conditions.trim() === "" || exerciseDays.trim() === "" || meals.trim() === "" || sleepHours.trim() === "") {
+            alert("Por favor, preencha todos os campos.");
+            return;
+        }
+
+        // Verifica se peso, altura, dias de atividade física, refeições e horas de sono são valores válidos
+        if (weight <= 0 || height <= 0 || exerciseDays < 0 || meals <= 0 || sleepHours <= 0) {
+            alert("Por favor, insira valores válidos para peso, altura, atividade física, refeições e sono.");
+            return;
+        }
+
+        // Verifica se a data de nascimento é superior à data atual
+        var today = new Date();
+        var birthdateDate = new Date(birthdate);
+        if (birthdateDate >= today) {
+            alert("Por favor, insira uma data de nascimento válida.");
+            return;
+        }
+
+        // Armazena as credenciais e o perfil de saúde no localStorage
+        var userData = {
+            username: username,
+            password: password,
+            healthProfile: {
+                name: name,
+                birthdate: birthdate,
+                gender: gender,
+                weight: weight,
+                height: height,
+                conditions: conditions,
+                exerciseDays: exerciseDays,
+                meals: meals,
+                sleepHours: sleepHours
+            }
+        };
+        localStorage.setItem(username, JSON.stringify(userData));
+
+        // Exibe a mensagem de sucesso
+        document.getElementById("success-message").style.display = "block";
+
+        // Redireciona para a página de login após um breve atraso
+        setTimeout(function() {
+            window.location.href = "login.html";
+        }, 2000); // 2000 milissegundos = 2 segundos
+    });
+</script>
+
+</body>
+</html>
